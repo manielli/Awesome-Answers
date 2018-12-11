@@ -1,0 +1,41 @@
+<%#
+
+In Rails, a template whose name begins with an "_" is considered
+a partial.
+
+To create a form for a resource (i.e. a model), use the `form_with`
+helper instead of the `form_tag`. It's usual arguments are:
+
+- A named arg. `model` which is assigned an instance of a model
+  (e.g. a new question)
+- A named arg. `local` which will prevent the form from submitting
+  its data using AJAX.
+- A block that is passed the `form` object wherein we build
+  the HTML inside the form (e.g. labels, inputs, submission buttons, etc)
+
+All dat from the input fields from a form built with this will have its
+name-value pairs nested in a hash named after the class of the passed in model.
+(e.g. <input name="question[title]"> => { "question: {"title": "what?"} } )
+
+%>
+
+<%= form_with(model: @question, local: true) do |form| %>
+
+    <% if @question.errors.present? %>
+        <p class="form-errors">
+            <%= @question.errors.full_messages.join(", ") %>
+        </p>
+    <% end %>
+
+    <div>
+        <%= form.label :title %> <br>
+        <%= form.text_field :title %>
+    </div>
+
+    <div>
+        <%= form.label :body %> <br>
+        <%= form.text_area :body, cols: 50, rows: 10 %>
+    </div>
+
+    <%= form.submit %>
+<% end %>

@@ -1,0 +1,21 @@
+<h1>List of Questions</h1>
+
+<ul class="question-list">
+    <% @questions.each do |question| %>
+        <li>
+            <%= link_to(question.title, question_path(question.id) ) %> <br>
+            <small>Seen <%= pluralize(question.view_count, "time") %></small>
+            •
+            <small>Posted <%= time_ago_in_words(question.created_at) %></small>
+        </li>
+    <% end %>
+</ul>
+
+<!--
+<ul class="question-list">
+    <% @questions.each do |q| %>
+        <li>
+            <% q.title %>
+        </li>
+    <% end %>
+</ul> -->

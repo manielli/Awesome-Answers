@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Awesome Answers</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <%# <a href="/">Home</a> %>
+        <%#
+        
+          https://api.rubyonrails.org/classes/ActionView/Helper/UrlHelper.html#method-i-link_to
+        %>
+        <%= link_to("Home", root_path) %>
+        |
+        <%= link_to("Questions", questions_path) %>
+        |
+        <%= link_to("New Question", new_question_path) %>
+        |
+        <%# <a href="/contact_us">Contact Us</a> %>
+        <%= link_to 'Contact Us', contact_us_path %>
+      </nav>
+    </header>
+    <%= yield %>
+  </body>
+</html>
