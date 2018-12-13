@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-    has_many(:answers, dependent: :destroy)
+    has_many(:answers)
     belongs_to :user
 
     # `has_many(:answers)` adds the folliwing instance methods
@@ -103,7 +103,7 @@ class Question < ApplicationRecord
         self
             .left_outer_joins(:answers)
             .select("questions.*", "COUNT(answers.*) AS answers_count")
-            .group("question.id")
+            .group("questions.id")
 
         # https://edgeguides.rubyonrails.org/active_record_querying.html#left-outer-joins
     end

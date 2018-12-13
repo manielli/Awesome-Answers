@@ -12,7 +12,12 @@ User.destroy_all
 
 PASSWORD = "supersecret"
 
-super_user = User.create(first_name: "Jon", last_name: "Snow", email: "js@winterfell.gov", password: "daenerystargaryen")
+super_user = User.create(
+    first_name: "Jon", 
+    last_name: "Snow", 
+    email: "js@winterfell.gov", 
+    password: "daenerystargaryen"
+)
 
 
 10.times do
@@ -25,12 +30,11 @@ super_user = User.create(first_name: "Jon", last_name: "Snow", email: "js@winter
         email: "#{first_name.downcase}-#{last_name.downcase}@example.com",
         password: PASSWORD
     )
-
 end
 
 users = User.all
 
-100.times do
+200.times do
     created_at = Faker::Date.backward(365 * 5)
 
     q = Question.create(
@@ -41,13 +45,14 @@ users = User.all
         body: Faker::ChuckNorris.fact,
         view_count: rand(100_000),
         created_at: created_at,
-        updated_at: created_at
+        updated_at: created_at,
+        user: users.sample
     )
 
     if q.valid?
         rand(0..15).times do
             q.answers << Answer.new(
-                body:  Faker::GreekPhilosophers.quote
+                body: Faker::GreekPhilosophers.quote,
                 user: users.sample
             )
         end
