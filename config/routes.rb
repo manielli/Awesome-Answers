@@ -1,19 +1,50 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
 
-  # Question Related Routes
-  get("/questions/new", to: "questions#new", as: :new_question)
-  # new_question_path, new_question_url
-  post("/questions", to: "questions#create", as: :questions)
-  # questions_path, question_url
+  # resources :sessions, only: [:new, :create, :destroy]
+  # resource is singular rather than resources
+  # Unlike resources, resource will create routes
+  # that do CRUD operations on only on thing.
+  # There will be no index route, and no route,
+  # and it will have a ":id" wildcard. The controller
+  # name must still be plural.
 
-  get("/questions", to: "questions#index")
-  get("/questions/:id", to: "questions#show", as: :question)
-  # question_path(<id>), question_url(<id>)
-  delete("questions/:id", to: "questions#destroy")
-  get("/questions/:id/edit", to: "questions#edit", as: :edit_question)
-  #edit_question_path(<:id>), edit_question_url(<:id>)
-  patch("/questions/:id", to: "questions#update")
+  resource :session, only: [:new, :create, :destroy]
+  resources :users, only: [:new, :create]
+  
+  
+  resources :answers
+
+  # `resources` method will generate all CRUD routes following
+  # RESTful conventions for a resource. It will assume there is a 
+  # controller named after the first argument pluralized and PascalCased.
+  # (i.e. :question => QuestionsController)
+
+  resources :questions do
+    # Routes written inside of a block passed
+    # to a `resources` method will be pre-fixed
+    # by a path corresponding to the passed in symbol.
+    # In this case, all nested routes will be
+    # prefixed with `/questions/:question_id/`
+
+    resources :answers, only: [:create, :destroy]
+    # question_answers_path(<question-id>), question_answer_url
+    # question_answers_path(@question.id)
+  end
+  
+  # # Question Related Routes
+  # get("/questions/new", to: "questions#new", as: :new_question)
+  # # new_question_path, new_question_url
+  # post("/questions", to: "questions#create", as: :questions)
+  # # questions_path, questions_url
+  # get("/questions", to: "questions#index")
+  # get("/questions/:id", to: "questions#show", as: :question)
+  # # question_path(<id>), question_url(<id>)
+  # delete("questions/:id", to: "questions#destroy")
+  # get("/questions/:id/edit", to: "questions#edit", as: :edit_question)
+  # #edit_question_path(<:id>), edit_question_url(<:id>)
+  # patch("/questions/:id", to: "questions#update")
 
   # To create, use methods named after HTTP
   # verbs. This includes: get, post, put, patch, delete, etc.

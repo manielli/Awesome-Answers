@@ -6,12 +6,34 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Answer.destroy_all
 Question.destroy_all
+User.destroy_all
 
-200.times do
+PASSWORD = "supersecret"
+
+super_user = User.create(first_name: "Jon", last_name: "Snow", email: "js@winterfell.gov", password: "daenerystargaryen")
+
+
+10.times do
+    first_name = Faker::Name.first_name
+    last_name = Faker::Name.last_name
+    
+    User.create(
+        first_name: first_name,
+        last_name: last_name,
+        email: "#{first_name.downcase}-#{last_name.downcase}@example.com",
+        password: PASSWORD
+    )
+
+end
+
+users = User.all
+
+100.times do
     created_at = Faker::Date.backward(365 * 5)
 
-    Question.create(
+    q = Question.create(
         # Faker is a ruby module. We access classes or other modules
         # inside of module with ::. Here Hacker is a class inside of the
         # Faker module.
@@ -21,7 +43,22 @@ Question.destroy_all
         created_at: created_at,
         updated_at: created_at
     )
+
+    if q.valid?
+        rand(0..15).times do
+            q.answers << Answer.new(
+                body:  Faker::GreekPhilosophers.quote
+                user: users.sample
+            )
+        end
+    end
+
 end
 
-question = Question.all
-puts Cowsay.say("Generated #{question.count} questions", :frogs)
+questions = Question.all
+answers = Answer.all
+
+puts Cowsay.say("Generated #{questions.count} questions", :frogs)
+puts Cowsay.say("Generated #{answers.count} answers", :sheep)
+puts Cowsay.say("Generated #{users.count} users", :dragon)
+puts Cowsay.say("Login with #{super_user.email} and password: daenerystargaryen", :ghostbusters)

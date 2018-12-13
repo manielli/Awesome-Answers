@@ -1,4 +1,32 @@
 class Question < ApplicationRecord
+    has_many(:answers, dependent: :destroy)
+    belongs_to :user
+
+    # `has_many(:answers)` adds the folliwing instance methods
+    # to the Question model:
+
+    # answers
+    # answers<<(object, ...)
+    # answers.delete(object, ...)
+    # answers.destroy(object, ...)
+    # answers=(objects)
+    # answer_ids
+    # answer_ids=(ids)
+    # answers.clear
+    # answers.empty?
+    # answers.size
+    # answers.find(...)
+    # answers.where(...)
+    # answers.exists?(...)
+    # answers.build(attributes = {}, ...)
+    # answers.create(attributes = {})
+    # answers.create!(attributes = {})
+    # answers.reload
+        
+    # Association instance methods can be used as part of
+    # an Active Record query chain. For example:
+    # q.answers.where("id > ?", 10).order(body: :desc).first
+    
     # The is Question model for the questions table
     # Raols will attr_accessors for all columns of
     # the table (e.g. id, title, view_count, created_at, updated_at)
@@ -70,6 +98,16 @@ class Question < ApplicationRecord
     # https://guides.rubyonrails.org/active_record_callbacks.html
 
     before_validation(:set_default_view_count)
+
+    def self.all_with_answer_counts
+        self
+            .left_outer_joins(:answers)
+            .select("questions.*", "COUNT(answers.*) AS answers_count")
+            .group("question.id")
+
+        # https://edgeguides.rubyonrails.org/active_record_querying.html#left-outer-joins
+    end
+
 
     private
     def no_monkey

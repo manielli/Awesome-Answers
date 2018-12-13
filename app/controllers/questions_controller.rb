@@ -1,4 +1,7 @@
 class QuestionsController < ApplicationController
+    before_action :find_question, only: [:show, :edit, :update, :destroy]
+    before_action :authenticate_user!, except: [:index, :show]
+
     def new
         @question = Question.new
     end
@@ -6,6 +9,9 @@ class QuestionsController < ApplicationController
     def create
         # render json: params => just to render the hash of the params
         @question = Question.new question_params
+        @question.user = current_user # if current_user.present? we don't 
+        # need this file because the user doesn't get to this page if they
+        # are not a user
         
         if @question.save
             redirect_to question_path(@question.id)
@@ -15,14 +21,19 @@ class QuestionsController < ApplicationController
     end
 
     def index
-        @questions = Question.all.order(created_at: :desc)
+        @questions = Question.all_with_answer_counts.order(created_at: :desc)
 
         # render json: @questions
     end
 
     def show
-        @question = Question.find params[:id]
+        # @question = Question.find params[:id]
+        # We'll get rid of this because we have before_action at the top
+        # and the private find_question method
 
+        @answers = @question.answers.order(created_at: :desc)
+        @answer = Answer.new
+        
         # @question.view_count += 1
         # @question.save
         # render json: @question
@@ -35,18 +46,25 @@ class QuestionsController < ApplicationController
     end
 
     def destroy
-        question = Question.find params[:id]
-        question.destroy
+        # question = Question.find params[:id]
+        # question.destroy
+        # We'll get rid of this because we have before_action at the top
+        # and the private find_question method
 
+        @question.destroy
         redirect_to questions_path
     end 
 
     def edit
-        @question = Question.find params[:id]
+        # @question = Question.find params[:id]
+        # We'll get rid of this because we have before_action at the top
+        # and the private find_question method
     end
 
     def update
-        @question = Question.find params[:id]
+        # @question = Question.find params[:id]
+        # We'll get rid of this because we have before_action at the top
+        # and the private find_question method
 
         if @question.update question_params
             redirect_to question_path(@question.id)
@@ -64,5 +82,9 @@ class QuestionsController < ApplicationController
         # Then, use `permit` to specify all input names that are allowed
         # as symbols.
         params.require(:question).permit(:title, :body)
+    end
+
+    def find_question
+        @question = Question.find params[:id]
     end
 end
