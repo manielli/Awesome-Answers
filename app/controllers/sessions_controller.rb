@@ -13,15 +13,17 @@ class SessionsController < ApplicationController
             # in the session for later retrieval.
 
             session[:user_id] = user.id
-            redirect_to root_path, notice: "Logged in"
+            flash[:primary] = "Logged In"
+            redirect_to root_path
         else
-            flash[:alert] = "Email or password is incorrect"
+            flash[:primary] = "Email or password is incorrect"
             render :new
         end
     end
 
     def destroy
         session[:user_id] = nil
-        redirect_to root_path, notice: "Logged out"
+        flash[:primary] = "Logged out"
+        redirect_to root_path
     end
 end
