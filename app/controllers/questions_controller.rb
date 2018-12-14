@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
     before_action :find_question, only: [:show, :edit, :update, :destroy]
     before_action :authenticate_user!, except: [:index, :show]
+    before_action :authorize_user!, only: [:edit, :update, :destroy]
 
     def new
         @question = Question.new
@@ -86,5 +87,15 @@ class QuestionsController < ApplicationController
 
     def find_question
         @question = Question.find params[:id]
+    end
+
+    def authorize_user!
+        # We add a ! to the name of this method as a convention, because
+        # it can mutate the `response` object of our controller.
+        # Terminating it prematurely.
+        unless can?(:crud, @question)
+            flash[:danger] = "Access Denied!"
+            redirect_to question_path(@question)
+        end
     end
 end
