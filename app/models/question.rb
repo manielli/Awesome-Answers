@@ -1,6 +1,17 @@
 class Question < ApplicationRecord
-    has_many(:answers)
     belongs_to :user
+
+    # The `dependent` option specifies what happens to records
+    # that are dependent on this one (i.e. a question has many answers).
+    
+    # Passing the `:destroy` tells ActiveRecord to delete the dependents
+    # before deleting the owner record. In this case, delete
+    # the answers before deleting the question.
+
+    # Passing the value `:nullify` will set the dependent's foreign
+    # key column (e.g. question_id) to null allowing the owning record
+    # to be destroyed.
+    has_many(:answers, dependent: :destroy)
 
     # `has_many(:answers)` adds the folliwing instance methods
     # to the Question model:

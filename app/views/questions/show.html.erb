@@ -23,11 +23,14 @@
 <div>
   <small>
 
+    <% if can?(:edit, @question) %>
     <%= link_to(
         "Edit", 
         edit_question_path(@question.id) 
     ) %>
+    <% end %>
 
+    <% if can?(:delete, @question) %>
     <%= link_to(
       "Delete",
       question_path(@question.id),
@@ -36,6 +39,7 @@
         confirm: "Are you sure?"
       }
     ) %>
+    <% end %>
 
   </small>
 </div>
@@ -47,7 +51,6 @@
     and array to the "model" argument where the parent
     model is the first element of the array and the second
     is the model being created.
-
 %>
 <%= form_with(model: [@question, @answer], local: true) do |f| %>
 
