@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   # response to the client's request.
 
   # Example: 
-  # `to: "welcome#incdex"` directs the request to
+  # `to: "welcome#index"` directs the request to
   # the `WelcomeController`'s index public method
   # `to: "posts#show"` direct the request to a
   # "PostsController"'s `show` method.

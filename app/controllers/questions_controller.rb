@@ -45,7 +45,25 @@ class QuestionsController < ApplicationController
 
         @question.update_columns(view_count: @question.view_count + 1)
     end
-
+    
+    def edit
+        # @question = Question.find params[:id]
+        # We'll get rid of this because we have before_action at the top
+        # and the private find_question method
+    end
+    
+    def update
+        # @question = Question.find params[:id]
+        # We'll get rid of this because we have before_action at the top
+        # and the private find_question method
+        
+        if @question.update question_params
+            redirect_to question_path(@question.id)
+        else
+            render :edit
+        end
+    end
+    
     def destroy
         # question = Question.find params[:id]
         # question.destroy
@@ -54,24 +72,6 @@ class QuestionsController < ApplicationController
 
         @question.destroy
         redirect_to questions_path
-    end 
-
-    def edit
-        # @question = Question.find params[:id]
-        # We'll get rid of this because we have before_action at the top
-        # and the private find_question method
-    end
-
-    def update
-        # @question = Question.find params[:id]
-        # We'll get rid of this because we have before_action at the top
-        # and the private find_question method
-
-        if @question.update question_params
-            redirect_to question_path(@question.id)
-        else
-            render :edit
-        end
     end
 
     private
