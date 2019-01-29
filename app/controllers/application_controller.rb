@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
     def current_user
         if session[:user_id].present?
             @current_user ||= User.find_by(id: session[:user_id])
@@ -23,5 +22,4 @@ class ApplicationController < ActionController::Base
             redirect_to new_session_path
         end
     end
-
 end

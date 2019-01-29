@@ -1,4 +1,5 @@
 class JobPost < ApplicationRecord
+    belongs_to :user
     validates :title, presence: true
     validates :min_salary, numericality: true
     # When using numericality validation, strings that

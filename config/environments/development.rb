@@ -1,4 +1,6 @@
 Rails.application.configure do
+  # Verifies that versions and hashed value of the package contents in the project's package.json
+  config.webpacker.check_yarn_integrity = true
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -34,6 +36,16 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.perform_caching = false
+
+  # This tell Rails to send email through `letter_opener` gem which will
+  # open the email in a browser tab instead of using the default way which is
+  # sending via SMTP. This file is `development.rb` which means these config
+  # are only when running `development` mode
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = {
+    host: "localhost:3000"
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

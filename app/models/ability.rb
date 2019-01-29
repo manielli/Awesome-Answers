@@ -74,5 +74,20 @@ class Ability
     can(:crud, Answer) do |answer|
       answer.user == user
     end
+
+    can(:crud, JobPost) do |job_post|
+      job_post.user == user
+    end
+
+    can(:like, Question) do |question|
+      # Check to first see if user is signed in
+      # We're also doing this with ou authenticate_user
+      # though.
+      user.persisted? && question.user != user
+    end
+
+    can(:destroy, Like) do |like|
+      like.user == user
+    end
   end
 end

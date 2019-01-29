@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
+
+  resources :job_posts, only: [:new, :create, :show, :destroy]
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
 
@@ -27,11 +31,40 @@ Rails.application.routes.draw do
     # by a path corresponding to the passed in symbol.
     # In this case, all nested routes will be
     # prefixed with `/questions/:question_id/`
-
     resources :answers, only: [:create, :destroy]
     # question_answers_path(<question-id>), question_answer_url
     # question_answers_path(@question.id)
+
+
+    # We could also add :index instead of get :liked, on: :collection we added below
+    resources :likes, shallow: true, only: [:create, :destroy]
+    # The shallow: true named argument will separate routes
+    # that require the parent from those that don't.
+    # Routes that require the parent won't change
+    # (i.g. index, new, create)
+    # Routes that don't require the parent
+    # (e.g. show, efit, update, destroy) will have the
+    # parent prefix (i.e. /question/:question_id) removed.
+
+    # Example
+    # /questions/10/likes/9/edit becomes /likes/9/edit
+
+    get :liked, on: :collection
+    # /questions/liked
+    # Use the "on" named argument to specity how a
+    # nested route behaves relative to its parent
+
+    # `on: :collection` means that it acts on the 
+    # entire resource. All questions in this case. `new`
+    # and `create` act on the collection
+
+    # get :also_liked, on: :member
+    # `on: :member` means that it acts on a single resource.
+    # A single question, in this case. `edit`, 
+    # `update`, `destroy`, `show` are all member routes
   end
+
+    
   
   # # Question Related Routes
   # get("/questions/new", to: "questions#new", as: :new_question)
@@ -89,5 +122,16 @@ Rails.application.routes.draw do
   # To list all of your routes, use the command:
   # rails routes
 
-
+  # The option defaults: {format: json} will se json
+  # as a the default response for all routes.
+  # The namespace method in Rails makes it so it will
+  # automcatically look in a directory `api`, then
+  # in a subdirectory v1
+  namespace :api, defaults: {format: :json} do
+    namespace :v1 do
+      resources :answers, only: [:index]
+      resources :questions, only: [:show, :index, :create, :destroy]
+      resource :session, only: [:create, :destory]
+    end
+  end
 end

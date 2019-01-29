@@ -15,17 +15,14 @@ RSpec.describe JobPost, type: :model do
     it("returns 2 job posts") do
       #  GIVEN
       # 3 job posts in the database
-      job_post_a = JobPost.create(
-        title: "Software Engineer",
-        min_salary: 60_000
+      job_post_a = FactoryBot.create(
+        :job_post, title: "Software Engineer"
       )
-      job_post_b = JobPost.create(
-        title: "Programmer",
-        min_salary: 60_000
+      job_post_b = FactoryBot.create(
+        :job_post, title: "Programmer"
       )
-      job_post_c = JobPost.create(
-        title: "Software QA",
-        min_salary: 35_000
+      job_post_c = FactoryBot.create(
+        :job_post, title: "Software QA"
       )
 
       #  WHEN
@@ -53,7 +50,7 @@ RSpec.describe JobPost, type: :model do
     it("requires a title") do
       # GIVEN
       # An instance of a JobPost
-      job_post = JobPost.new
+      job_post = FactoryBot.build(:job_post, title: nil)
 
       # WHEN
       # Validations are triggered
@@ -71,7 +68,7 @@ RSpec.describe JobPost, type: :model do
 
     it("requires that min_salary is a number") do
       # job_post = JobPost.new(min_salary: "1000") initially was this and it gave and error when running rspec
-      job_post = JobPost.new(min_salary: "one hundred")
+      job_post = FactoryBot.build(:job_post, min_salary: "one hundred")
 
       job_post.valid?
 

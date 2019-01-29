@@ -1,5 +1,14 @@
 class Question < ApplicationRecord
-    belongs_to :user
+    belongs_to :user#, optional: true
+
+    has_many :taggings, dependent: :destroy
+    has_many :tags, through: :taggings#, source: :tag
+    # If the name of the association (i.e. tags) is the 
+    # same as the source singularized (i.e. tag), the
+    # source argument can be omitted
+
+    has_many :likes, dependent: :destroy
+    has_many :likers, through: :likes, source: :user
 
     # The `dependent` option specifies what happens to records
     # that are dependent on this one (i.e. a question has many answers).
@@ -119,6 +128,31 @@ class Question < ApplicationRecord
         # https://edgeguides.rubyonrails.org/active_record_querying.html#left-outer-joins
     end
 
+    # def like_for
+    #     likes.find_by(user: user)
+    # end
+
+    # q = Question.first
+    # q.tag_names > comma separated list of tags
+    # associated with a given question, q.
+    def tag_names
+        self.tags.map{ |t| t.name }.join(", ")
+    end
+
+    # i.e. 
+    # 1.tag_names = "stuff, yo"
+
+    # The code in the 👆🏼 example above would call the method
+    # we wrote below, where the value on the right hand side
+    # of the = would become the argument to the method.
+    def tag_names=(rhs)
+        self.tags = rhs.strip.split(/\s*,\s*/).map do |tag_name|
+            # Find the first record with the given
+            # attributes, or initializes a record (Tag.new)
+            # with the attributes if one is not found.
+            Tag.find_or_initialize_by(name: tag_name)
+        end
+    end
 
     private
     def no_monkey

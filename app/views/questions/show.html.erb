@@ -6,7 +6,31 @@
     Created by: <%= @question.user&.full_name || "Delete" %>
 </p>
 
+<p>
+  <%# Tags: %><%#= @question.tags.map{ |t| t.name }.join(", ") %>  
+    <% unless @question.tags.empty? %>
+        <div>
+            <% @question.tags.each do |tag| %>
+                <%= link_to(tag.name, questions_path(tag: tag.name), class: "badge bagde-pill badge-primary" ) %>
+            <% end %>
+        </div>
+    <% end %>
+
+</p>
+
 <div>
+    <small>
+        <% if @like.present? %>
+            <%= link_to("Unlike", like_path(@like), method: :delete) %>
+        <% else %>
+            <%= link_to("Like", question_likes_path(@question.id), method: :post) %>
+        <% end %>
+    </small>
+    •
+    <small>
+        <%= pluralize(@question.likes.count, "like") %>
+    </small>
+    •
     <small>
         Asked <%= time_ago_in_words(@question.created_at) %> ago
     </small>
@@ -74,7 +98,7 @@
 
 <ul class="answer-list" >
     <% @answers.each do |answer| %>
-        <li>
+        <li id="<%= dom_id(answer) %>" >
             <strong> <%= answer.user.full_name %> created: </strong> <br>
             <p>
                 <%= answer.body %>

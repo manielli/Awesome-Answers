@@ -8,7 +8,14 @@
 
 Answer.destroy_all
 Question.destroy_all
+JobPost.destroy_all
 User.destroy_all
+Like.destroy_all
+Tag.destroy_all
+Tagging.destroy_all
+
+# `Tag.destroy_all` should take care of `Tagging.destroy_all` 
+# because they are dependent but we just put it in case
 
 PASSWORD = "supersecret"
 
@@ -35,6 +42,14 @@ end
 
 users = User.all
 
+10.times do
+    Tag.create(
+        name: Faker::Book.genre
+    )
+end
+
+tags = Tag.all
+
 200.times do
     created_at = Faker::Date.backward(365 * 5)
 
@@ -51,6 +66,10 @@ users = User.all
     )
 
     if q.valid?
+
+        q.likers = users.shuffle.slice(0, rand(users.count))
+        q.tags = tags.shuffle.slice(0, rand(tags.count/2))
+
         rand(0..15).times do
             q.answers << Answer.new(
                 body: Faker::GreekPhilosophers.quote,
@@ -63,8 +82,11 @@ end
 
 questions = Question.all
 answers = Answer.all
+likes = Like.all
 
 puts Cowsay.say("Generated #{questions.count} questions", :frogs)
 puts Cowsay.say("Generated #{answers.count} answers", :sheep)
 puts Cowsay.say("Generated #{users.count} users", :dragon)
 puts Cowsay.say("Login with #{super_user.email} and password: daenerystargaryen", :ghostbusters)
+puts Cowsay.say("Generated #{likes.count} likes", :cheese)
+puts Cowsay.say("Generated #{tags.count} tags", :koala)

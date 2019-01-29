@@ -29,6 +29,28 @@ module AwesomeAnswersNov2018
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.active_job.queue_adapter = :delayed_job
+
+    
+
+    config.middleware.insert_before(0, Rack::Cors) do
+      allow do
+        # origins "www.google.com"
+        origins "localhost:3030", "127.0.0.1:3030"
+        # The "origins" specifies which domains are allowed to make AJAX
+        # requests to this server. "*" means everyone and should normally
+        # not be used.
+
+        resource(
+          "/api/*", # this means that only routes that begin with /api/ are accessible
+          headers: :any, 
+          credentials: true,
+          methods: [:get, :post, :delete, :patch, :put, :options]
+          )
+      end
+    end
+
     config.generators do |g|
       # Don't create helper files when using `rails generator`
       # --no-helper

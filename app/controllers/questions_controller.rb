@@ -22,9 +22,22 @@ class QuestionsController < ApplicationController
     end
 
     def index
-        @questions = Question.all_with_answer_counts.order(created_at: :desc)
+        # byebug
+        if params[:tag]
+            @tag = Tag.find_or_initialize_by(name: params[:tag])
+            @questions = @tag.questions.all_with_answer_counts.order(created_at: :desc)
+        else
+            @questions = Question.all_with_answer_counts.order(created_at: :desc)
+        end
+        
+        # @questions = current_user.liked_questions.all_with_answer_counts.order(created_at: :desc)
+        # same thing and we used this in the liked action method down below at the bottom of this file
 
         # render json: @questions
+        respond_to do |format|
+            format.html { render :index }
+            format.json { render json: @questions }
+        end
     end
 
     def show
@@ -34,7 +47,10 @@ class QuestionsController < ApplicationController
 
         @answers = @question.answers.order(created_at: :desc)
         @answer = Answer.new
-        
+        @like = @question.likes.find_by(user: current_user)
+        # @like = Like.find_by(current_user) // same thing
+        # @like = @question.like_for(current_user)
+
         # @question.view_count += 1
         # @question.save
         # render json: @question
@@ -74,6 +90,10 @@ class QuestionsController < ApplicationController
         redirect_to questions_path
     end
 
+    def liked
+        @questions = current_user.liked_questions.all_with_answer_counts.order(created_at: :desc)
+    end
+
     private
     def question_params
         # Use the require method on the params object to retrieve
@@ -82,7 +102,7 @@ class QuestionsController < ApplicationController
 
         # Then, use `permit` to specify all input names that are allowed
         # as symbols.
-        params.require(:question).permit(:title, :body)
+        params.require(:question).permit(:title, :body, :tag_names)
     end
 
     def find_question
