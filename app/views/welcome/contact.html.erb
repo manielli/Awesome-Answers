@@ -1,5 +1,7 @@
 <h1>Contact Us</h1>
 
+<%= react_component("HelloWorld", {name: "Jon Snow"}) %>
+
 <%= form_tag(process_contact_path) do %>
     <div>
         <%= label_tag(:full_name) %> <br>
