@@ -129,7 +129,7 @@ Rails.application.routes.draw do
   # in a subdirectory v1
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
-      resources :answers, only: [:index]
+      resources :answers, only: [:index, :destroy]
       resources :questions, only: [:show, :index, :create, :destroy]
       resource :session, only: [:create, :destory]
     end

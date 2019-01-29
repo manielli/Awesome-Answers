@@ -1,3 +1,5 @@
+<%= javascript_pack_tag 'question-show' %>
+
 <h3><%= @question.title %></h3>
 
 <p><%= @question.body %></p>
@@ -107,9 +109,9 @@
                     <%= link_to(
                         "Delete",
                         question_answer_path(@question.id, answer.id),
-                        method: :delete,
+                        class: "answer-delete-btn",
                         data: { 
-                            confirm: "Are you sure?"
+                            id: answer.id
                         }
                     ) %>
                 </small>
