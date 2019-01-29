@@ -1,6 +1,7 @@
-console.log("Question Show Javascript Loaded!");
+import anime from "animejs";
+// console.log("Question Show Javascript Loaded!");
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("turbolinks:load", () => {
     document.querySelectorAll(".answer-delete-btn").forEach(node => {
         node.addEventListener("click", event => {
             event.preventDefault();
@@ -22,7 +23,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 // with the option `credentials: "same-origin"`
                 method: "DELETE"
             }).then(() => {
-                document.querySelector(`#answer_${answerId}`).remove();
+                const answerLi = document.querySelector(`#answer_${answerId}`);
+
+                anime({
+                    targets: answerLi, 
+                    opacity: 0,
+                    // scale: 5,
+                    duration: 150,
+                    easing: "linear"
+
+                }).finished.then(() => {
+                    answerLi.remove();
+                });
             });
         });
     });
