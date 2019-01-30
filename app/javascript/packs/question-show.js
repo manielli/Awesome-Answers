@@ -1,7 +1,7 @@
 import anime from "animejs";
 // console.log("Question Show Javascript Loaded!");
 
-document.addEventListener("turbolinks:load", () => {
+document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".answer-delete-btn").forEach(node => {
         node.addEventListener("click", event => {
             event.preventDefault();

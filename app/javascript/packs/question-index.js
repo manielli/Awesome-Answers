@@ -2,7 +2,7 @@ import anime from "animejs";
 
 // console.log(anime);
 
-document.addEventListener("turbolinks:load", () => {
+document.addEventListener("DOMContentLoaded", () => {
     anime({
         targets: ".question-list > li",
         // translateX: 100,
