@@ -22,11 +22,11 @@ class QuestionSerializer < ActiveModel::Serializer
   belongs_to(:user, key: :author)
   has_many(:answers)
 
-  # class AnswerSerializer < ActiveModel::Serializer
-  #   attributes :id, :body, :created_at, :updated_at
+  class AnswerSerializer < ActiveModel::Serializer
+    attributes :id, :body, :created_at, :updated_at
 
-  #   belongs_to(:user, key: :author)
-  # end
+    belongs_to(:user, key: :answerer)
+  end
 
   # You can create methods in a serializer to include custom
   # data in the json serialization. When doing so,

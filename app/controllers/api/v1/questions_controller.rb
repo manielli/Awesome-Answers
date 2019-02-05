@@ -5,18 +5,23 @@ class Api::V1::QuestionsController < Api::ApplicationController
     def create
         question = Question.new question_params
         question.user = current_user
-        if question.save
-            render json: {id: question.id}
-        else
-            render(json: {errors: question.errors},
-            status: 422 # Unprocessable Entity
-            )
-        end
+        # if question.save
+        #     render json: {id: question.id}
+        # else
+        #     render(json: {errors: question.errors},
+        #     status: 422 # Unprocessable Entity
+        #     )
+        # end
+
+        question.save!
+        render json: {id: question.id}
     end
 
     def index
-        questions = Question.order(created_at: :desc)
-        render json: questions
+        # questions = Question.order(created_at: :desc)
+        questions = Questions.order(created_at: :desc)
+        # to cause an error
+        render json: question
     end
 
     def show

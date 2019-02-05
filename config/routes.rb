@@ -129,9 +129,36 @@ Rails.application.routes.draw do
   # in a subdirectory v1
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
-      resources :answers, only: [:index, :destroy]
-      resources :questions, only: [:show, :index, :create, :destroy]
-      resource :session, only: [:create, :destory]
+      
+      # resources :answers, only: [:index, :destroy]
+      
+      resources :questions, only: [:show, :index, :create, :destroy] do
+        resources :answers, only: [:index, :destroy]
+      end
+      
+      resource :session, only: [:create, :destroy]
+      
+      resources :users, only: [] do
+        # get :current # /api/v1/users/:user_id/current
+        # get :current, on: :member # /api/v1/users/:id/current
+        get :current, on: :collection # /api/v1/users/current
+      end
+
     end
+
+    # The following routes will match any URL that hasn't been
+    # matched already inside of the "/api" namespace.
+    
+    # The "*" prefix in the routes path allows this route wildcard
+    # match ANYTHING.
+  
+    # The "via:" argument is required and is used to specify
+    # which methods this route applies to.
+    # Example: 
+    # `via: [:get, :post, :patch]`
+    # `via: :all` will match all mpossible methods.
+  
+    match "*unmatched", via: :all, to: "application#not_found"
   end
+
 end
