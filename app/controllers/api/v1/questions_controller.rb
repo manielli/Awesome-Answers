@@ -12,33 +12,33 @@ class Api::V1::QuestionsController < Api::ApplicationController
         #     status: 422 # Unprocessable Entity
         #     )
         # end
-
         question.save!
         render json: {id: question.id}
     end
-
+    
     def index
-        # questions = Question.order(created_at: :desc)
-        questions = Questions.order(created_at: :desc)
+        questions = Question.order(created_at: :desc)
+        # questions = Questions.order(created_at: :desc)
         # to cause an error
-        render json: question
+        render json: questions
     end
-
+    
     def show
         render json: question
     end
-
+    
     def destroy
         question.destroy
         render(json: {status: 200}, status: 200)
     end
-
+    
     private
     def question
         @question ||= Question.find params[:id]
     end
-
+    
     def question_params
+        # binding.pry
         params.require(:question).permit(:title, :body, :tag_names)
     end
 end

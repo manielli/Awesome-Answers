@@ -93,7 +93,9 @@ class Api::ApplicationController < ApplicationController
         errors = record.errors.map do |field, message|
             {
                 type: error.class.to_s,
-                record_type: record.class.to_s
+                record_type: record.class.to_s,
+                field: field,
+                message: message
             }
         end
         render(
