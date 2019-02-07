@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "/auth/github", as: :sign_in_with_github
   match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
 
   resources :job_posts, only: [:new, :create, :show, :destroy]
