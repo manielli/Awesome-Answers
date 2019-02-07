@@ -27,6 +27,10 @@ class User < ApplicationRecord
     # to hash and store it in the " password_digest" column, meaning
     # we'll never store plain text passwords.
 
+    validates(
+        :uid,
+        uniqueness: { scope: :provider }
+    )
 
     validates(
         :email,
@@ -38,5 +42,26 @@ class User < ApplicationRecord
     def full_name
         "#{first_name} #{last_name}".strip
     end
-    
+
+    def self.find_by_oauth(data)
+        self.find_by(
+          uid: data["uid"],
+          provider: data["provider"]
+        )
+    end
+
+    def self.create_from_oauth(data)
+        names = data["info"]["name"]&.split || [data["info"]["nickname"]]
+
+        self.create(
+            first_name: names[0],
+            last_name: names[1] || "",
+            email: data["info"]["email"],
+            uid: data["uid"],
+            provider: data["provider"],
+            oauth_token: data["credentials"]["token"],
+            oauth_raw_data: data,
+            password: SecureRandom.alphanumeric(64)
+        )
+    end
 end

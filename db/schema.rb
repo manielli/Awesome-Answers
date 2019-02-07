@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_18_234134) do
+ActiveRecord::Schema.define(version: 2019_02_07_222915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,7 +94,12 @@ ActiveRecord::Schema.define(version: 2019_01_18_234134) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
+    t.string "uid"
+    t.string "provider"
+    t.string "oauth_token"
+    t.text "oauth_raw_data"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider"
   end
 
   add_foreign_key "answers", "questions"

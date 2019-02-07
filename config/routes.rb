@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get "/auth/github", as: :sign_in_with_github
+  get "/auth/:provider/callback", to: "callbacks#index"
+
   match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
 
   resources :job_posts, only: [:new, :create, :show, :destroy]
