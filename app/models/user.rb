@@ -43,6 +43,10 @@ class User < ApplicationRecord
         "#{first_name} #{last_name}".strip
     end
 
+    def from_oath?(provider)
+        self.uid.present? && self.provider == provider
+    end
+
     def self.find_by_oauth(data)
         self.find_by(
           uid: data["uid"],

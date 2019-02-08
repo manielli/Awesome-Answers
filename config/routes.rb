@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   # (i.e. :question => QuestionsController)
 
   resources :questions do
+    # /questions/:id/publish_gist
+    post :publish_gist, on: :member
+
     # Routes written inside of a block passed
     # to a `resources` method will be pre-fixed
     # by a path corresponding to the passed in symbol.
