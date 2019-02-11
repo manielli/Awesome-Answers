@@ -43,7 +43,7 @@ class User < ApplicationRecord
         "#{first_name} #{last_name}".strip
     end
 
-    def from_oath?(provider)
+    def from_oauth?(provider)
         self.uid.present? && self.provider == provider
     end
 

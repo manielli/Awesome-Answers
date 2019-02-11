@@ -49,12 +49,7 @@
 <div>
   <small>
     <% if can?(:crud, @question) && current_user.from_oauth?("github") %>
-      <%= link_to(
-        "Publish Gist",
-        publish_gist_question_path(@question),
-        method: :post,
-        class: "btn btn-primary btn-sm"
-      ) %>
+      <%= link_to("Publish Gist", publish_gist_question_path(@question), method: :post, class: "btn btn-primary btn-sm") %>
     <% end %>
 
     <% if can?(:edit, @question) %>
