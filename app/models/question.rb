@@ -153,6 +153,11 @@ class Question < ApplicationRecord
     # Equivalent
     # scope(:viewable, -> { where(aasm_state: [:published, :answered, :not_answered]) })
 
+    scope(:recent, -> { order(created_at: :desc).limit(10) })
+    # When we call this:
+    # Question.recent is equivalent to:
+    # Question.order(created_at: :desc).limit(10)
+
     def self.all_with_answer_counts
         self
             .left_outer_joins(:answers)

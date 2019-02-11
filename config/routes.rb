@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   get "/auth/github", as: :sign_in_with_github
   get "/auth/:provider/callback", to: "callbacks#index"
 
