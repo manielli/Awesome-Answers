@@ -62,7 +62,9 @@ tags = Tag.all
         view_count: rand(100_000),
         created_at: created_at,
         updated_at: created_at,
-        user: users.sample
+        user: users.sample,
+        # aasm_state: [:draft, :published, :answered, :not_answered, :archived]
+        aasm_state: Question.aasm.states.map(&:name).sample
     )
 
     if q.valid?

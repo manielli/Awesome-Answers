@@ -89,5 +89,10 @@ class Ability
     can(:destroy, Like) do |like|
       like.user == user
     end
+
+    can(:publish, Question) do |question|
+      question.user == user
+    end
+
   end
 end

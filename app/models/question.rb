@@ -119,6 +119,40 @@ class Question < ApplicationRecord
 
     before_validation(:set_default_view_count)
 
+    include AASM
+
+    aasm whiny_transitions: false do
+        state :draft, initial: true
+        state :published
+        state :answered
+        state :not_answered
+        state :archived
+    
+
+        event :publish do
+            transitions from: :draft, to: :published
+        end
+
+        event :answer do
+            transitions from: [:not_answered, :published], to: :answered
+        end
+
+        event :no_answer do
+            transitions from: [:published], to: :not_answered
+        end
+
+        event :archive do
+            transitions to: :archived
+        end
+    end
+
+    def self.viewable
+        where(aasm_state: [:published, :answered, :not_answered])
+    end
+
+    # Equivalent
+    # scope(:viewable, -> { where(aasm_state: [:published, :answered, :not_answered]) })
+
     def self.all_with_answer_counts
         self
             .left_outer_joins(:answers)

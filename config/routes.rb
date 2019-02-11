@@ -29,6 +29,10 @@ Rails.application.routes.draw do
   # (i.e. :question => QuestionsController)
 
   resources :questions do
+    
+    resources :publishings, only: :create
+
+
     # /questions/:id/publish_gist
     post :publish_gist, on: :member
 

@@ -17,8 +17,14 @@
             <% end %>
         </div>
     <% end %>
-
 </p>
+
+<% if @question.draft? && can?(:publish, @question) %>
+    <div>
+        <%= link_to("Publish", question_publishings_path(@question), method: :post, class: "btn btn-primary btn-small bg-light text-primary") %>
+    </div>
+<% end %>
+
 
 <div>
     <small>
