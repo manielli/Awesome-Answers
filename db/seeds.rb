@@ -13,6 +13,7 @@ User.destroy_all
 Like.destroy_all
 Tag.destroy_all
 Tagging.destroy_all
+AdminUser.destroy_all
 
 # `Tag.destroy_all` should take care of `Tagging.destroy_all` 
 # because they are dependent but we just put it in case
@@ -28,7 +29,7 @@ super_user = User.create(
     admin: true
 )
 
-10.times do
+100.times do
     first_name = Faker::Name.first_name
     last_name = Faker::Name.last_name
     

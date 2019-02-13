@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
         # are not a user
         
         if @question.save
-            redirect_to question_path(@question.id)
+            redirect_to question_path(@question)
         else
             render :new
         end
@@ -72,9 +72,10 @@ class QuestionsController < ApplicationController
         # @question = Question.find params[:id]
         # We'll get rid of this because we have before_action at the top
         # and the private find_question method
-        
+
+        @question.slug = nil # this forces FriendlyID  to re-generate a slug
         if @question.update question_params
-            redirect_to question_path(@question.id)
+            redirect_to question_path(@question)
         else
             render :edit
         end

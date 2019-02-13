@@ -193,6 +193,20 @@ class Question < ApplicationRecord
         end
     end
 
+    # This method is defined already and returns `id`
+    # you can override it to return something else.
+    # def to_param
+    #     "#{id}-#{title}".parameterize
+    # end
+
+    # :slugged option will use `slug` field in the DB to store most recent Slug
+    # :finders will make `Question.find` work with `slug` instead of `id` so you won't
+    # have to use `Question.friendly.find`
+    # :history will keep a history of previous slugs in case you change the field
+    # that is used to generate the slug (in this case it's the `title`)
+    extend FriendlyId
+    friendly_id :title, use: [:slugged, :finders, :history]
+
     private
     def no_monkey
         # &. is the self navigation operator. It's used 

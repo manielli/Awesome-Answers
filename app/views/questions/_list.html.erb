@@ -3,7 +3,12 @@
 <ul class="question-list">
     <% @questions.each do |question| %>
         <li>
-            <%= link_to(question.title, question_path(question.id) ) %> <br>
+            <%# if you pass to a URL help (such  as `question_path`) an active record object
+            instead of an integer or a string, then the URL helper  will call `to_param`
+            method on that object (in this case `question`) which returns the id by 
+            default %>
+
+            <%= link_to(question.title, question_path(question) ) %> <br>
             <small>Answered <%= pluralize(question.answers_count, "time") %> </small>
             •
             <small>Seen <%= pluralize(question.view_count, "time") %></small>
