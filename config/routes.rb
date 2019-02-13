@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   # name must still be plural.
 
   resource :session, only: [:new, :create, :destroy]
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :show]
   
   
   resources :answers

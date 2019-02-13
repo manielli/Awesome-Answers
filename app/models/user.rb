@@ -27,6 +27,10 @@ class User < ApplicationRecord
     # to hash and store it in the " password_digest" column, meaning
     # we'll never store plain text passwords.
 
+    # validates :password, presence: true
+    # This caused an error when added friendly id and slugs to users
+
+
     validates(
         :uid,
         uniqueness: { scope: :provider }
@@ -68,4 +72,7 @@ class User < ApplicationRecord
             password: SecureRandom.alphanumeric(64)
         )
     end
+
+    extend FriendlyId
+    friendly_id :full_name, use: [:slugged, :finders, :history]
 end

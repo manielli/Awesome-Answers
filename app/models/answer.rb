@@ -27,6 +27,10 @@ class Answer < ApplicationRecord
   # when a validation fails instead of returning `false`.
 
   validates(:body, presence: true)
+
+  # extend FriendlyId
+  # friendly_id :body, use: [:slugged, :finders, :history]
+
 end
 
 =begin

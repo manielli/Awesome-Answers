@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
     def create
         @user = User.new user_params
-        
+        @user.slug = nil
         if @user.save
             session[:user_id] = @user.id
             flash[:primary] = "Signed Up"
