@@ -1,39 +1,47 @@
 <h1>Sign Up</h1>
 
-<%= form_with(model: @user, local: true) do |f| %>
-
-    <% if @user.errors.any? %>
+<%#= form_with(model: @user, local: true) do |f| %>
+<%= simple_form_for @user do |f| %>
+    <%# if @user.errors.any? %>
+        <%# 
         <p>
-            <%= @user.errors.full_messages.join(", ") %>
+        %>
+            <%#= @user.errors.full_messages.join(", ") %>
+        <%#
         </p>
-    <% end %>
-
+        %>
+    <%# end %>
+    <%= f.input :first_name %>
     <div>
-        <%= f.label(:first_name) %>
-        <%= f.text_field(:first_name) %>
+        <%#= f.label(:first_name) %>
+        <%#= f.text_field(:first_name) %>
     </div>
 
+    <%= f.input :last_name %>
     <div>
-        <%= f.label(:last_name) %>
-        <%= f.text_field(:last_name) %>
+        <%#= f.label(:last_name) %>
+        <%#= f.text_field(:last_name) %>
     </div>
 
+    <%= f.input :email %>
     <div>
-        <%= f.label(:email) %>
-        <%= f.email_field(:email) %>
+        <%#= f.label(:email) %>
+        <%#= f.email_field(:email) %>
     </div>
 
+    <%= f.input :password %>
     <div>
-        <%= f.label(:password) %>
-        <%= f.password_field(:password) %>
+        <%#= f.label(:password) %>
+        <%#= f.password_field(:password) %>
     </div>
 
+    <%= f.input :password_confirmation %>
     <div>
-        <%= f.label(:password_confirmation) %>
-        <%= f.password_field(:password_confirmation) %>
+        <%#= f.label(:password_confirmation) %>
+        <%#= f.password_field(:password_confirmation) %>
     </div>
 
-    <%= f.submit "Sign Up" %>
+    <%= f.submit "Sign Up", class: "btn btn-primary bg-light text-primary" %>
     
 
 <% end %>

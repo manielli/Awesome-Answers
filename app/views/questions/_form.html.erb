@@ -19,28 +19,41 @@ name-value pairs nested in a hash named after the class of the passed in model.
 
 %>
 
-<%= form_with(model: @question, local: true) do |form| %>
+<%#= form_with(model: @question, local: true) do |form| %>
+<%= simple_form_for @question do |form| %>
 
-    <% if @question.errors.present? %>
-        <p class="form-errors">
-            <%= @question.errors.full_messages.join(", ") %>
-        </p>
-    <% end %>
-
+    <%# if @question.errors.present? %>
+        <%# 
+            <p class="form-errors">
+        %>
+            <%#= @question.errors.full_messages.join(", ") %>
+        <%#
+            </p>
+        %>
+    <%# end %>
+    <%# simple form generates div wrapper and label with input by default: 
+        - it also knows the type from the DB field type 
+        - it also knows whether a field is required or not based on an ActiveRecord validations 
+    %>
+    <%#= form.input :title, as: :text, label: 'abc', required: false %>
+    <%= form.input :title %>
+    
     <div>
-        <%= form.label :title %> <br>
-        <%= form.text_field :title %>
+        <%#= form.label :title %> <%# <br> %>
+        <%#= form.text_field :title %>
     </div>
 
+    <%= form.input :body %>
     <div>
-        <%= form.label :body %> <br>
-        <%= form.text_area :body, cols: 50, rows: 10 %>
+        <%#= form.label :body %> <%# <br> %>
+        <%#= form.text_area :body, cols: 50, rows: 10 %>
     </div>
 
     
+    <%= form.input :tag_names %>
     <div>
-        <%= form.label :tag_names %>
-        <%= form.text_field :tag_names %>
+        <%#= form.label :tag_names %>
+        <%#= form.text_field :tag_names %>
 
         <%#= form.collection_check_boxes :tag_ids, Tag.all, :id, :name %>
         <%# 
@@ -53,7 +66,7 @@ name-value pairs nested in a hash named after the class of the passed in model.
         %>
     </div>
 
-    <%= form.submit "Submit Question" %>
+    <%= form.submit "Submit Question", class: "btn btn-primary bg-light text-primary" %>
 <% end %>
 
 <script>

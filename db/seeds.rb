@@ -19,6 +19,7 @@ Tagging.destroy_all
 
 PASSWORD = "supersecret"
 
+
 super_user = User.create(
     first_name: "Jon", 
     last_name: "Snow", 
@@ -26,7 +27,6 @@ super_user = User.create(
     password: "daenerystargaryen",
     admin: true
 )
-
 
 10.times do
     first_name = Faker::Name.first_name

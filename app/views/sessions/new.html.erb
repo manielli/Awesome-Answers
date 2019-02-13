@@ -1,17 +1,20 @@
 <h1>Sign In</h1>
 
-<%= form_with(url: session_path, local: true) do |f| %>
+<%= simple_form_for User.new, url: session_path, local: true do |f|  %>
+<%#= form_with(url: session_path, local: true) do |f| %>
 
+    <%= f.input :email %>
     <div>
-        <%= f.label(:email) %>
-        <%= f.email_field(:email) %>
+        <%#= f.label(:email) %>
+        <%#= f.email_field(:email) %>
     </div>
 
+    <%= f.input :password %>
     <div>
-        <%= f.label(:password) %>
-        <%= f.password_field(:password) %>
+        <%#= f.label(:password) %>
+        <%#= f.password_field(:password) %>
     </div>
 
-    <%= f.submit "Sign In"%>
+    <%= f.submit "Sign In", class: "btn btn-primary bg-light text-primary"%>
 
 <% end %>
