@@ -26,10 +26,13 @@ super_user = User.create(
     last_name: "Snow", 
     email: "js@winterfell.gov", 
     password: "daenerystargaryen",
+    address: "142 West Hastings Street, Vancouver, BC",
     admin: true
 )
+super_user.geocode
+super_user.save!
 
-100.times do
+10.times do
     first_name = Faker::FunnyName.two_word_name.split(" ").first
     last_name = Faker::FunnyName.two_word_name.split(" ").last
     

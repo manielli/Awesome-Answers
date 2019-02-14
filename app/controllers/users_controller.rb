@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     def show
         @user = User.find params[:id]
         if @user.longitude && @user.latitude
-          @nearby_users = User.near([@user.latitude, @user.longitude], 100, units: :km)
+          @nearby_users = User.near([@user.latitude, @user.longitude], 1, units: :km)
         end
     end
 
