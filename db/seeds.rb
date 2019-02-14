@@ -30,10 +30,11 @@ super_user = User.create(
 )
 
 100.times do
-    first_name = Faker::Name.first_name
-    last_name = Faker::Name.last_name
+    first_name = Faker::FunnyName.two_word_name.split(" ").first
+    last_name = Faker::FunnyName.two_word_name.split(" ").last
     
-    User.create(
+
+    u = User.create(
         first_name: first_name,
         last_name: last_name,
         email: "#{first_name.downcase}-#{last_name.downcase}@example.com",
@@ -90,7 +91,7 @@ likes = Like.all
 puts Cowsay.say("Generated #{questions.count} questions", :frogs)
 puts Cowsay.say("Generated #{answers.count} answers", :sheep)
 puts Cowsay.say("Generated #{users.count} users", :dragon)
-puts Cowsay.say("Login with #{super_user.email} and password: daenerystargaryen", :ghostbusters)
+# puts Cowsay.say("Login with #{super_user.email} and password: daenerystargaryen", :ghostbusters)
 puts Cowsay.say("Generated #{likes.count} likes", :cheese)
 puts Cowsay.say("Generated #{tags.count} tags", :koala)
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

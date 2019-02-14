@@ -6,13 +6,20 @@ class UsersController < ApplicationController
 
     def create
         @user = User.new user_params
-        @user.slug = nil
+        # @user.slug = nil
         if @user.save
             session[:user_id] = @user.id
             flash[:primary] = "Signed Up"
             redirect_to root_path
         else
             render :new
+        end
+    end
+
+    def show
+        @user = User.find params[:id]
+        if @user.longitude && @user.latitude
+          @nearby_users = User.near([@user.latitude, @user.longitude], 100, units: :km)
         end
     end
 

@@ -30,10 +30,12 @@ class User < ApplicationRecord
     # validates :password, presence: true
     # This caused an error when added friendly id and slugs to users
 
+    geocoded_by :address
 
     validates(
         :uid,
-        uniqueness: { scope: :provider }
+        uniqueness: { scope: :provider },
+        if: Proc.new { |x| x.uid.present? }
     )
 
     validates(
