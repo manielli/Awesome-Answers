@@ -29,7 +29,7 @@ super_user = User.create(
     address: "142 West Hastings Street, Vancouver, BC",
     admin: true
 )
-super_user.geocode
+super_user.geocode!
 super_user.save!
 
 10.times do
