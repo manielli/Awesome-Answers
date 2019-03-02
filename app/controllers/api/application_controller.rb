@@ -1,4 +1,4 @@
-class Api::ApplicationController < ApplicationController
+rorclass Api::ApplicationController < ApplicationController
     skip_before_action(:verify_authenticity_token)
     # When making POST, DELETE, PATCH requests to our controllers
     # Rails requires that authenticity token is included as part
