@@ -14,6 +14,7 @@
 !/tmp/.keep
 
 /config/initializers/app_keys.rb
+/examples/get_user_from_github.rb
 
 # Ignore uploaded files in development
 /storage/*
