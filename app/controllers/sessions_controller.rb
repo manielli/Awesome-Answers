@@ -4,8 +4,8 @@ class SessionsController < ApplicationController
     end
 
     def create
-        user = User.find_by_email params[:email]
-        if user&.authenticate(params[:password])
+        user = User.find_by_email params[:user][:email]
+        if user&.authenticate(params[:user][:password])
 
             # The session is an object usable in controllers that
             # uses cookies to store encrypted data.
