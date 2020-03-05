@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // translateX: 100,
         // duration: 10000,
         opacity: 1,
-        duration: 50,
+        duration: 100,
         delay: anime.stagger(100)
     })
 })
