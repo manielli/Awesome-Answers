@@ -97,4 +97,4 @@ puts Cowsay.say("Generated #{users.count} users", :dragon)
 # puts Cowsay.say("Login with #{super_user.email} and password: daenerystargaryen", :ghostbusters)
 puts Cowsay.say("Generated #{likes.count} likes", :cheese)
 puts Cowsay.say("Generated #{tags.count} tags", :koala)
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+AdminUser.create!(email: 'admin@example.com', password: 'supersecret', password_confirmation: 'supersecret') if Rails.env.development?
