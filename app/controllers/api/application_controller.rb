@@ -1,4 +1,4 @@
-rorclass Api::ApplicationController < ApplicationController
+class Api::ApplicationController < ApplicationController
     skip_before_action(:verify_authenticity_token)
     # When making POST, DELETE, PATCH requests to our controllers
     # Rails requires that authenticity token is included as part
@@ -31,7 +31,7 @@ rorclass Api::ApplicationController < ApplicationController
                 status: 404,
                 errors: [{
                     type: "NotFound",
-                    message: "No Route matches path /#{params[:unmatched]}"
+                    message: "No Route matches path /api/#{params[:unmatched]}"
                 }]
             }
         )
