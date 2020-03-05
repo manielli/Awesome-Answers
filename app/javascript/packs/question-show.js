@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const { currentTarget } = event;
             // const answerId = currentTarget.getAttribute("data-id");
             const answerId = currentTarget.dataset.id;
+            console.log(answerId)
             // An alternative to get values of HTML attributes whoe
             // names are prefixed with "data-" is being the "dataset"
             // property of HTML nodes.
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 crenedtials: "same-origin",
                 // When fetching on the same domain, include cookies
                 // with the option `credentials: "same-origin"`
-                method: "DELETE"
+                method: "DELETE",
             }).then(() => {
                 const answerLi = document.querySelector(`#answer_${answerId}`);
 

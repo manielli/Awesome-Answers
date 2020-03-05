@@ -3,8 +3,14 @@ class Api::V1::AnswersController < Api::ApplicationController
 
 
     def index
-        answers = Answer.order(created_at: :desc)
+        question = Question.find params[:question_id]
+        answers = question.answers.order(created_at: :desc)
         render json: answers 
+    end
+
+    def show
+        answer = Answer.find params[:id]
+        render json: answer
     end
 
     def destroy
