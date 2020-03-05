@@ -144,7 +144,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       
       # resources :answers, only: [:index, :destroy]
-      resources :answers, only: [:destroy]
+      resources :answers, only: [:index, :destroy]
       resources :questions, only: [:show, :index, :create, :destroy] do
         resources :answers, only: [:index, :destroy]
       end
