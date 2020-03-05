@@ -13,10 +13,10 @@ ActiveAdmin.register_page "Dashboard" do
     #
     columns do
       column do
-        panel "Recent Posts" do
+        panel "Recent Questions" do
           ul do
-            Question.recent(5).map do |post|
-              li link_to(question.title, admin_post_path(question))
+            Question.recent.map do |question|
+              li link_to(question.title, admin_question_path(question))
             end
           end
         end

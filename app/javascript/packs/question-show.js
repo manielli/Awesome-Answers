@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     targets: answerLi, 
                     opacity: 0,
                     // scale: 5,
-                    duration: 150,
+                    duration: 1000,
                     easing: "linear"
 
                 }).finished.then(() => {
