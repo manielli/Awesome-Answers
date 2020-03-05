@@ -26,6 +26,8 @@ class QuestionsController < ApplicationController
         if params[:tag]
             @tag = Tag.find_or_initialize_by(name: params[:tag])
             @questions = @tag.questions.viewable.all_with_answer_counts.order(created_at: :desc)
+        elsif current_user.admin?
+            @questions = Question.all_with_answer_counts.order(created_at: :desc)
         else
             @questions = Question.viewable.all_with_answer_counts.order(created_at: :desc)
         end
