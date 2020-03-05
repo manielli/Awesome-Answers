@@ -5,10 +5,10 @@ import anime from "animejs";
 document.addEventListener("DOMContentLoaded", () => {
     anime({
         targets: ".question-list > li",
-        translateX: 100,
+        // translateX: 100,
         // duration: 1000,
         opacity: 1,
-        // duration: 100,
+        // duration: 10,
         delay: anime.stagger(50)
     })
 })
